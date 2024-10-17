@@ -23,27 +23,29 @@ const Login = () => {
 
     return (
         <div className="my-4">
-        <div className="container d-md-flex mt-2 mb-1" >
+        <div className="container mt-2 mb-1" >
             <Image 
-                src="/assets/icons/logo-full.svg"
-                height={75}
-                width={75}
+                src="/assets/images/okapi.jpg"
+                height={35}
+                width={35}
                 alt="logo"
-                className=""
-                // style={{ marginBottom: '5px' }}
+                className="rounded-circle ms-2"
             />
+            <span className=" mt-0">
+                <h6 className="small">Okapi AI </h6>
+            </span>
         </div>
 
         <div className="container row  d-flex " >
                 <section className="col-md-6 d-flex flex-column justify-content-center mt-5">
-                        <div className="mx-auto" style={{ maxWidth: '496px' }}>
+                        <div className="mx-auto">
                             <Image 
                                 alt="brand"
-                                src="/assets/images/brand.png"
+                                src="/assets/icons/dalle.svg"
                                 width={1000}
                                 height={1000}
-                                className="d-none d-md-block h-100 w-100"
-                                style={{ maxWidth: '100%', objectFit: 'cover' }}
+                                className="d-none d-md-block  "
+                                style={{ maxWidth: '100%', height: '100%', width: '1000%', }}
                             />
                         </div>
                 </section>

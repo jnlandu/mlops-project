@@ -87,6 +87,26 @@ const Home = ( ) => {
     }
   };
 
+  //  Speech: text-to-speech functionality
+  const speakText = (text) => {
+    // Cancel any ongoing speech synthesis
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+  
+    // Create a speech synthesis utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Set some optional properties
+    utterance.rate = 1; // Adjust the speed
+    utterance.pitch = 1; // Adjust the pitch
+    utterance.volume = 1; // Adjust the volume (0 to 1)
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  };
+  
+
 
   return (
     <ProtectedRoute>
@@ -117,7 +137,7 @@ const Home = ( ) => {
                   />
                   : <FaUserCircle size={24} />}
                 </span>
-                <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify border '}  me-1 mt-1 `}>
+                <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify '}  me-1 mt-1 `}>
                   <p className='text-secondary'>
                     {msg.text}
                   </p> 
@@ -131,7 +151,12 @@ const Home = ( ) => {
              <div className='d-flex  justify-content-between mt-2'>
               <span className='d-flex justify-between gap-2'>
                 <a href='#'><span> <RiFileCopyLine size={20}/> </span> </a>
-                <a href='#'><span> <AiOutlineSound size={20}/> </span></a>
+                {/*  Add the sound  */}
+                <a href='#'
+                 onClick={() => speakText(message)}
+                 >
+                 <span> <AiOutlineSound size={20}/> </span>
+                </a>
                 <a href='#'><span> <RiThumbUpLine size={20}/> </span> </a>
                 <a href='#'><span> <RiThumbDownLine size={20}/> </span></a>
                 <a href='#'><span> <LuRefreshCcw size={20}/> </span></a>
@@ -144,7 +169,7 @@ const Home = ( ) => {
             <div ref={endOfMessagesRef} />
           {/* </div> */}
         </div>
-       <div className="question-input d-flex align-items-center gap-1 border">
+       <div className="question-input d-flex align-items-center gap-1">
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
