@@ -11,6 +11,7 @@ from jose import jwt, JWTError
 from dotenv import load_dotenv
 from .database import SessionLocal
 
+
 load_dotenv()
 
 SECRET_KEY = os.getenv('AUTH_SECRET_KEY')
@@ -44,3 +45,4 @@ async def get_current_user(token: oauth2_bearer_dependency):
     
 
 user_dependency = Annotated[dict, Depends(get_current_user)]
+

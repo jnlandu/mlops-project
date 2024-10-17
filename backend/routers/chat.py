@@ -1,13 +1,16 @@
 from fastapi import APIRouter
 from fastapi import HTTPException
-from utils.api import Client, ChatRequest
+from utils.api import Client
 from utils.deps import db_dependency, user_dependency
+from utils.models import ChatRequest
 
 
 router = APIRouter(
     prefix='/chat',
     tags=['Summarize or Chat']
 )
+
+roles = ["system", "user", "assistant"]
 
 # Dummy list to hold chat messages
 chat_history = []
@@ -17,6 +20,7 @@ async def get_chat():
 
 @router.post('/')
 async def chat(
+    #   role: str,
       db: db_dependency, user: user_dependency, 
       chat_request: ChatRequest,
     #   file: UploadFile = File(...),
@@ -28,7 +32,7 @@ async def chat(
             chat_completion = Client.chat.completions.create(
                 messages=[
                     {
-                        "role": "user",
+                        "role": "assistant",
                         "content": chat_request.content,
                     }
                 ],

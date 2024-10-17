@@ -1,0 +1,15 @@
+python-dotenv
+PyPDF2
+python-dotenv
+bcrypt
+pytest
+httpx
+groq  # in case sanity requires groq
+evidently # in case we need to do model monitoring
+sqlalchemy
+python-jose
+passlib
+pandas
+evidently[llm]
+
+
