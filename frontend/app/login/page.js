@@ -22,15 +22,15 @@ const Login = () => {
     };
 
     return (
-        <div className=" ">
-        <div className="container d-md-flex mt-4 mb-5" >
+        <div className="my-4">
+        <div className="container d-md-flex mt-2 mb-1" >
             <Image 
                 src="/assets/icons/logo-full.svg"
                 height={75}
                 width={75}
                 alt="logo"
                 className=""
-                style={{ marginBottom: '40px' }}
+                // style={{ marginBottom: '5px' }}
             />
         </div>
 
