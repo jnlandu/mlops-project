@@ -1,13 +1,17 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import AuthContext from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import AuthContext from '../../context/AuthContext';
+import Spinner from 'react-bootstrap/esm/Spinner';
+import Image from 'next/image';
 
 const SignUp = () => {
   const { login } = useContext(AuthContext);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleRegister = async (e) => {
@@ -19,7 +23,9 @@ const SignUp = () => {
         password: registerPassword,
       });
       console.log('Registration successful', response.data);
-      login(registerEmail, registerPassword); // Assuming 'login' handles the logic properly
+      setLoading(true);  // show the spinner
+      await login(registerEmail, registerPassword); // Assuming 'login' handles the logic properly
+      setLoading(false); // hide the spinner
     } catch(error) {
       console.error('Failed to register user:', error.response ? error.response.data : error);
     }
@@ -27,41 +33,83 @@ const SignUp = () => {
   
 
   return (
-    <div className="container login">
-      <h2 className='mt-5'>Sign up </h2>
-      <form onSubmit={handleRegister}>
-        <div className="mb-3">
-          <label htmlFor="registerEmail" className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            id="registerEmail"
-            value={registerEmail}
-            onChange={(e) => setRegisterEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="registerPassword" className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="registerPassword"
-            value={registerPassword}
-            onChange={(e) => setRegisterPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Register</button>
-      </form>
-      <div className="container mt-3">
-        <small>Do you already have an account? </small> 
-        <a className="text-primary" href="#"
-        onClick={() => router.push('/login')}
-        
-        >Sign in</a>
-      </div>
+  <div className=" ">
+    <div className="container d-md-flex mt-4 mb-5" >
+        <Image 
+            src="/assets/icons/logo-full.svg"
+            height={75}
+            width={75}
+            alt="logo"
+            className=""
+            style={{ marginBottom: '40px' }}
+        />
     </div>
+
+    <div className="container row  d-flex " >
+            <section className="col-md-6 d-flex flex-column justify-content-center mt-5">
+                    <div className="mx-auto" style={{ maxWidth: '496px' }}>
+                        <Image 
+                            alt="brand"
+                            src="/assets/images/brand.png"
+                            width={1000}
+                            height={1000}
+                            className="d-none d-md-block h-100 w-100"
+                            style={{ maxWidth: '100%', objectFit: 'cover' }}
+                        />
+                    </div>
+            </section>
+
+            {/* Right section: login form */}
+            <div className="col-md-6 d-flex flex-column  mb-2 mt-4">
+                <div className="intro-text mt-5">
+                    <h1 className="mb-1">Welcome 👋!</h1>
+                    <p className="mb-4">Create a free account to start generating summary for your text documents, and more.
+                    </p>
+                </div>
+                <section className="login-section container">
+                    <h2 className="mb-4">Create an account</h2>
+                    <form onSubmit={handleRegister}>
+                        <div className="mb-3">
+                            <label htmlFor="registerEmail" className="form-label">Email</label>
+                            <input 
+                                type="email" 
+                                className="form-control" 
+                                id="registerEmail"
+                                value={registerEmail}
+                                placeholder="Enter your email"
+                                onChange={(e) => setRegisterEmail(e.target.value)}
+                                required 
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="registerPassword" className="form-label">Password</label>
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="registerPassword"
+                                value={registerPassword}
+                                placeholder="Enter your password"
+                                onChange={(e) => setRegisterPassword(e.target.value)} 
+                                required 
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">
+                            {loading ? (
+                                <Spinner animation="border" role="status" />
+                            ) : 'Sign Up'}
+                        </button>
+                    </form>
+                    <div className="container mt-3">
+                      <small>Do you already have an account? </small> 
+                      <a className="text-primary" href="#"
+                      onClick={() => router.push('/login')}
+                      
+                      >Sign in</a>
+                    </div>
+                </section>
+            </div>
+    </div>
+</div>
   );
 }
 

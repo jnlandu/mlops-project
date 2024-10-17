@@ -1,7 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brand-color: #2a7ae2; 
+  --brand-color: #3e3636;
 
   --spacing-unit: 20px;  
   --brand-color: #2a7ae2; 
@@ -29,6 +29,7 @@ body {
 @media screen and (max-width: 767px) {
   html,
   body {
+    /* display: flex; */
     max-width: 100vw;
     overflow-x: hidden;
     /* margin-left: 8vw !important;
@@ -60,7 +61,7 @@ body {
 }
 
 a {
-  color: inherit;
+  /* color: none; */
   text-decoration: none;
 }
 
@@ -68,6 +69,12 @@ a {
   html {
     color-scheme: dark;
   }
+}
+.text-brand{
+  color: var(--brand-color) !important;
+}
+.brand-color{
+  color: var(--brand-color) !important;
 }
 
 .fixed-header {
@@ -110,9 +117,11 @@ margin-right: 10px !important;
 }
 
 .welcome {
-  margin-top: 100px;
+  width: 80%;
+  /* height: 20%; */
+  margin-top: 50px;
   text-align: center;
-  padding: 20px;
+  padding: 2px;
   border: 1px solid #3e3636;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
@@ -141,8 +150,6 @@ margin-right: 10px !important;
   margin-top: 40px !important;
   justify-content: right;
 }
-
-
 
 .logout-btn {
   /* max-width: 30%; */
@@ -201,3 +208,154 @@ margin-right: 10px !important;
   background-color: #171717;
 }
 
+
+.bg-appointments {
+  background-image: url('/assets/images/appointments-bg.png');
+}
+.bg-pending {
+  background-image: url('/assets/images/pending-bg.png');
+}
+.bg-cancelled {
+  background-image: url('/assets/images/cancelled-bg.png');
+}
+  
+
+
+
+
+
+.remove-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.remove-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+
+.btn-style{
+  /* background-color: #1b2123; */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.btn-style:hover, .btn-style:active{
+  background-color:  #3e3636;
+}
+
+.custom-max-height {
+  max-height: 400px;
+}
+
+.custom-object-cover img {
+  object-fit: cover; /* Ensures the image covers the element’s area */
+  width: 100%;       /* Ensures the image spans the full width of the container */
+  height: 100%;      /* Ensures the image spans the full height of the container */
+}
+.file-upload {
+  margin-top: 30px;
+  color: #4a5568;
+  cursor: pointer;
+  border-style: dashed !important;
+  border: 1px solid #3e3636;
+  width: 80%;
+  margin-left: 10%;
+}
+.file-upload_label {
+  margin-top: 10px;
+  color: #4a5568;
+  font-size: 12px;
+  /* color: #22C55E */
+}
+.classify-btn{
+  width: 80% !important;
+  margin-left: 10%;
+}
+@media screen and (min-width: 767px) {
+  .file-upload {
+    width: 100%;
+    margin-left: 0;
+  }
+  .classify-btn {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+    margin-left: 0;
+    /* border: 1px solid #3e3636; */
+  }
+  .redirect-to-chat{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-left: 10px !important;
+  }
+  .classification-text{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .uploaded-image {
+    display:flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0px !important;
+  }
+  .capture-btn{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center;
+    width: 100% !important;
+    margin-left: 50px !important; /* margin-right: 50px !important; */
+  }
+  
+}
+
+.uploaded-image {
+  margin-left: 20%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.output-prediction{
+  margin-left: 10%;
+}
+.capture-btn{
+  margin-left: 30lvw;
+}
+
+.remove-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  border-radius: 0px;
+}
+.remove-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.remove-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.remove-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 0px;
+}
+
+.remove-scrollbar::-webkit-scrollbar-thumb:hover {
+  /* background: #1e2238; */
+  background: transparent;
+}

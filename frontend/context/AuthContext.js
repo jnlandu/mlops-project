@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
             const formData = new FormData();
             formData.append('username', username);
             formData.append('password', password);
+            
 
             // use env for the API URL: process.env.API_URL
             const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/auth/token`;
@@ -30,7 +31,12 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', response.data.access_token);
             setUser(response.data);
             localStorage.setItem('user', username);
-            router.push('/');
+
+            if (username === 'admin') {
+                router.push('/admin/');
+            }else{
+                router.push('/');
+            }
         } catch (error) {
             console.log('Login Failed:', error);
         }

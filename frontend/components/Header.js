@@ -1,8 +1,9 @@
 'use client';
-import AuthContext from '@/context/AuthContext';
+// import AuthContext from '@/context/AuthContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
+import AuthContext from '../context/AuthContext';
 
 
 
