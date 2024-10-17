@@ -61,7 +61,7 @@ body {
 }
 
 a {
-  /* color: none; */
+  color: inherit;
   text-decoration: none;
 }
 
