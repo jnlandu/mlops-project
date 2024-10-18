@@ -62,6 +62,7 @@ const Home = ( ) => {
           // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
           const response = await axios.post(apiUrl, { content: message }, {
             headers: { Authorization: `Bearer ${storedToken}` },
+            
           });
           setChatMessages([...chatMessages, { text: message, sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
           setMessageToSpeak(response.data.response)
