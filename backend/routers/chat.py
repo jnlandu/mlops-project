@@ -12,7 +12,6 @@ router = APIRouter(
 
 roles = ["system", "user", "assistant"]
 
-# Dummy list to hold chat messages
 chat_history = []
 @router.get('/')
 async def get_chat():
@@ -20,23 +19,19 @@ async def get_chat():
 
 @router.post('/')
 async def chat(
-    #   role: str,
       db: db_dependency, user: user_dependency, 
       chat_request: ChatRequest,
-    #   file: UploadFile = File(...),
      
 ):
-    #  Test chat request:
     try:
-        # if   chat_request.content:
             chat_completion = Client.chat.completions.create(
                 messages=[
                     {
-                        "role": "assistant",
+                        "role": "user",
                         "content": chat_request.content,
                     }
                 ],
-                model="llama3-8b-8192",
+                model="mixtral-8x7b-32768",
             )
             response_message = chat_completion.choices[0].message.content
             chat_history.append(chat_request.content)  # Store user message

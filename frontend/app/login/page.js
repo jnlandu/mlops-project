@@ -23,7 +23,7 @@ const Login = () => {
 
     return (
         <div className="my-4">
-        <div className="container mt-2 mb-1" >
+        <div className="container mt-3 mb-1" >
             <Image 
                 src="/assets/images/okapi.jpg"
                 height={35}

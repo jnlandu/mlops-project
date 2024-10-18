@@ -26,6 +26,7 @@ body {
   margin-right: 10px !important;
 }
 
+
 @media screen and (max-width: 767px) {
   html,
   body {
@@ -47,8 +48,8 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color:  #ededed;;
+  background: #0a0a0a;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -65,11 +66,11 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */
 .text-brand{
   color: var(--brand-color) !important;
 }
@@ -121,7 +122,7 @@ margin-right: 10px !important;
   /* height: 20%; */
   margin-top: 50px;
   text-align: center;
-  padding: 2px;
+  padding: 3px;
   border: 1px solid #3e3636;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
@@ -129,6 +130,7 @@ margin-right: 10px !important;
 
 .chat-container {
   padding-top: 70px; /* Add top padding to the chat container equal to the header height */
+  margin-top: 10px;
 }
 
 .login{

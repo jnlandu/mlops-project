@@ -1,15 +1,24 @@
 python-dotenv
-PyPDF2
-python-dotenv
+# PyPDF2
 bcrypt
 pytest
 httpx
 groq  # in case sanity requires groq
 evidently # in case we need to do model monitoring
-sqlalchemy
+SQLAlchemy
 python-jose
 passlib
 pandas
-evidently[llm]
+numpy
+torch
+torchvision
+matplotlib
+fastapi
+uvicorn
+Pillow
+python-multipart
 
 
+
+
+ 

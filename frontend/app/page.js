@@ -14,10 +14,13 @@ import { AiOutlineSound } from "react-icons/ai";
 import { RiThumbUpLine } from "react-icons/ri";
 import { RiThumbDownLine } from "react-icons/ri";
 import { LuRefreshCcw } from "react-icons/lu";
+import { IoMdMic } from "react-icons/io";
+import { IoMdMicOff } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import { IoCameraOutline } from "react-icons/io5";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 
@@ -26,10 +29,14 @@ const Home = ( ) => {
   
   const [chatMessages, setChatMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [messageToSpeak, setMessageToSpeak] = useState("");
+  const [questtionAreaState, setQuestionAreaState] = useState(false);
+  const [micOn, setMicOn] = useState(false);
  
   const endOfMessagesRef = useRef(null);
   const [answered, setAnswered] = useState(false);
   const [outputLength, setOutputLength] = useState(0);  
+  const [transcriptedMessage, setTranscriptedMessage] = useState('');
 
 
   const [predictedClass, setPredictedClass] = useState('');
@@ -39,28 +46,9 @@ const Home = ( ) => {
 
   const [vision, setVision] = useState(false)
 
+  // Backend API URL
+  const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat` //?? http://localhost:8000/chat`;
 
-  useEffect(() => {
-    const fetchChatMessages = async () => {
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-        try {
-
-          const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat` //?? http://localhost:8000/chat`;
-          const chatResponse = await axios.get(apiUrl, {
-            headers: { 
-              'Authorization': `Bearer ${storedToken}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          setChatMessages(chatResponse.data.messages);
-        } catch (error) {
-          console.error('Fetching chat messages failed:', error);
-        }
-      }
-    };
-    fetchChatMessages();
-  }, []);
 
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -71,46 +59,113 @@ const Home = ( ) => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
         try {
-          const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
+          // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
           const response = await axios.post(apiUrl, { content: message }, {
             headers: { Authorization: `Bearer ${storedToken}` },
           });
           setChatMessages([...chatMessages, { text: message, sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
-          // setMessage("Hey");
+          setMessageToSpeak(response.data.response)
           setOutputLength(response.data.response.length);
           setAnswered(true);
         } catch (error) {
           console.error('Sending message failed:', error);
           setAnswered(false);
-        }
+        } 
       }
     }
   };
 
   //  Speech: text-to-speech functionality
-  const speakText = (text) => {
-    // Cancel any ongoing speech synthesis
+  const speakText = (text, event) => {
+    //  Prevent default behavior
+    if(event) {
+      event.preventDefault();
+    }
+    // Cancel the previous speech
     if (window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
     }
-  
-    // Create a speech synthesis utterance
+    //This creates a new speech synthesis instance
     const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Set some optional properties
+  
     utterance.rate = 1; // Adjust the speed
     utterance.pitch = 1; // Adjust the pitch
     utterance.volume = 1; // Adjust the volume (0 to 1)
     
     // Speak the text
     window.speechSynthesis.speak(utterance);
-  };
-  
 
+  
+    utterance.onend = () => {
+    window.speechSynthesis.cancel();
+  }
+  };
+
+//  Function to trigger the voice recognition
+const startVoiceRecognition = (event) => {
+  // Prevent default behavior
+  if (event) {
+    event.preventDefault();
+  }
+  // Check if browser supports speech recognition
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Your browser does not support voice recognition. Try Google Chrome.');
+    return;
+  }
+  //  Change the state of the mic icon
+  setMicOn(true);
+
+  // Use WebkitSpeechRecognition for Chrome or SpeechRecognition for other browsers
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = 'en-US';  
+  recognition.interimResults = false;  //only final results
+
+  // When a result is received
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    // setChatMessages([...chatMessages, { text: transcript, sender: 'user' }]);
+    // setTranscriptedMessage(transcript);
+    setMessage(transcript);
+    sendTranscriptionToBackend(transcript);
+    setMicOn(false);
+  };
+
+  // If there's an error during recognition
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
+    alert('There was an error with the speech recognition. Please try again.');
+  };
+
+  // Start recognition
+  recognition.start();
+
+};
+
+const  sendTranscriptionToBackend = async (transcription) => {
+  if (transcription.trim() !== "") {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      try {
+        // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
+        const response = await axios.post(apiUrl, { content: transcription }, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+        setChatMessages([...chatMessages, { text: message , sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
+        setMessageToSpeak(response.data.response)
+        setOutputLength(response.data.response.length);
+        setAnswered(true);
+      } catch (error) {
+        console.error('Sending message failed:', error);
+        setAnswered(false);
+      } 
+    }
+  }
+};
 
   return (
     <ProtectedRoute>
-  
         <Header/>
        <div className="container mt-2">
         <Welcome 
@@ -121,12 +176,12 @@ const Home = ( ) => {
          ' /> 
 
         <>
-        <div className="mb-3  chat-container ms-3 me-3">
+        <div className=" chat-container ms-3 me-3">
           {/* <div className=""> */}
             {chatMessages.map((msg, index) => (
-              <div key={index} className={` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
-                <span className={`${msg.sender === 'bot' ? 'me-2 mt-2' : 'mt-1'}`}>
-                  {msg.sender === 'bot' ?
+              <div key={index} className={  ` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
+                <span className={`${msg.sender === 'bot' ? ' me-2 mt-2' : 'mt-1'}`}>
+                  {msg.sender === 'bot' &&
                   
                   <Image
                   src="/assets/images/okapi.jpg"
@@ -134,12 +189,11 @@ const Home = ( ) => {
                   width={24}
                   height={24}
                   className='rounded-circle'
-                  />
-                  : <FaUserCircle size={24} />}
+                  />}
                 </span>
                 <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify '}  me-1 mt-1 `}>
-                  <p className='text-secondary'>
-                    {msg.text}
+                  <p className='text-secondary' id='transcription'>
+                    {msg.text }
                   </p> 
                 </div>
                 
@@ -152,14 +206,14 @@ const Home = ( ) => {
               <span className='d-flex justify-between gap-2'>
                 <a href='#'><span> <RiFileCopyLine size={20}/> </span> </a>
                 {/*  Add the sound  */}
-                <a href='#'
-                 onClick={() => speakText(message)}
+                <a href=''
+                 onClick={() => speakText(messageToSpeak, event)} cursor='pointer'
                  >
-                 <span> <AiOutlineSound size={20}/> </span>
+                 <AiOutlineSound size={20}/>
                 </a>
-                <a href='#'><span> <RiThumbUpLine size={20}/> </span> </a>
-                <a href='#'><span> <RiThumbDownLine size={20}/> </span></a>
-                <a href='#'><span> <LuRefreshCcw size={20}/> </span></a>
+                <a ><RiThumbUpLine size={20}/></a>
+                <a cursor='pointer'><RiThumbDownLine size={20}/></a>
+                <a cursor='pointer'><LuRefreshCcw size={20}/></a>
               </span>
             <span className='d-flex justify-between  text-end gap-2'>
             summary length: {outputLength}
@@ -169,7 +223,19 @@ const Home = ( ) => {
             <div ref={endOfMessagesRef} />
           {/* </div> */}
         </div>
+
+        {/*  Question input: */}
+        <div  className="mb-0 text-center">
+          <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it. </p>
+        </div>
        <div className="question-input d-flex align-items-center gap-1">
+          <a href=""
+            className='me-2'
+            onClick={startVoiceRecognition} 
+            cursor='pointer'
+          >
+            {micOn ? <IoMdMic size={25} /> : <IoMdMicOff size={25} />}
+          </a>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -177,9 +243,10 @@ const Home = ( ) => {
             placeholder="Type your message here..."
             rows="2"
           ></textarea>
-          {/*  Vistion model, Camera:  */}
-          <a href='#'
+          {/*  Vision model, Camera:  */}
+          <a
            onClick={() => router.push('/vision')} className='ms-2'
+           cursor='pointer'
           >
             <IoCameraOutline size={25} />
           </a>
