@@ -151,13 +151,13 @@ const Vision = () => {
                 <IoCameraOutline size={25} />
               </button>
               <div className='d-flex  ms-2 text-end gap-3 redirect-to-chat'>
-                <a href='#'
+                <a href=''
                   onClick={() => router.push('/')}
                 >
                 <small className='text-secondary'>Chat with Okapi
                 </small>
                 </a>
-                <a href='#' className='mt-1' onClick={() => router.push('/')}>
+                <a href='' className='mt-1' onClick={() => router.push('/')}>
                    <BsChatSquareText size={25} />
                 </a>
               </div>

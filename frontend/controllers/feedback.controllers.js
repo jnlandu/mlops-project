@@ -1,8 +1,6 @@
 
-
-
-// pages/api/feedback.js
-const PHOENIX_API_ENDPOINT = process.env.PHOENIX_API_ENDPOINT || 'http://localhost:6006';
+// to implement feedback controller, we need to send feedback to Phoenix API
+const PHOENIX_API_ENDPOINT = process.env.PHOENIX_API_ENDPOINT || 'https://localhost:6006';
 const SPAN_ANNOTATIONS_ENDPOINT = `${PHOENIX_API_ENDPOINT}/v1/span_annotations`;
 
 export default async function handler(req, res) {

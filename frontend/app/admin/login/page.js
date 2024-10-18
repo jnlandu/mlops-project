@@ -61,7 +61,7 @@ const Login = (searchParams ) => {
                 <button type="submit" className="btn btn-primary">Sign In</button>
             </form>
               <div className="flex-fill text-start mt-2">
-                <a href="#"
+                <a href=""
                  onClick = {() => router.push('/login') }
                  >
                 <small> Not an admin ? </small>  <small className="text-primary">sign in </small>

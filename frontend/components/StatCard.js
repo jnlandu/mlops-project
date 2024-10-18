@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const StatCard = ({ count, label, icon, type, handleClick,arialControls, state}) => {
     return (
     <>
-        <Link  href='#'
+        <Link  href=''
             className= {clsx("d-flex  px-4 w-75  mw-100 py-2 align-items-center border-none rounded  mt-3", {
                 "bg-appointments": type === "appointments",
                 "bg-pending": type === "pending",
@@ -20,7 +20,7 @@ const StatCard = ({ count, label, icon, type, handleClick,arialControls, state})
         >
             <div className="d-flex">
                 <div className="container d-flex align-items-center gap-2 ">
-                <Link href="#">
+                <Link href="">
                 <Image
                     src={icon}
                     height={32}

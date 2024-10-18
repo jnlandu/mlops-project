@@ -84,7 +84,7 @@ const Login = () => {
                                     onChange={(e) => setPassword(e.target.value)} 
                                     required 
                                 />
-                                <a href="#" onClick={() => router.push('/forgot-password/')}>
+                                <a href="" onClick={() => router.push('/forgot-password/')}>
                                     <small className="small">Forgot password?</small>
                                 </a>
                             </div>
@@ -106,7 +106,7 @@ const Login = () => {
                             </small>
                         </div>
                         <div className="text-end mt-2">
-                            <a href="#" onClick={() => router.push('/admin/login')}>
+                            <a href="" onClick={() => router.push('/admin/login')}>
                                 <small className="text-brand">Admin?</small>
                             </a>
                         </div>

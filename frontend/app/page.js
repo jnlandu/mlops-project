@@ -148,7 +148,6 @@ const  sendTranscriptionToBackend = async (transcription) => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       try {
-        // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
         const response = await axios.post(apiUrl, { content: transcription }, {
           headers: { Authorization: `Bearer ${storedToken}` },
         });
@@ -204,7 +203,7 @@ const  sendTranscriptionToBackend = async (transcription) => {
              { answered ? 
              <div className='d-flex  justify-content-between mt-2'>
               <span className='d-flex justify-between gap-2'>
-                <a href='#'><span> <RiFileCopyLine size={20}/> </span> </a>
+                <a href=''><span> <RiFileCopyLine size={20}/> </span> </a>
                 {/*  Add the sound  */}
                 <a href=''
                  onClick={() => speakText(messageToSpeak, event)} cursor='pointer'
@@ -258,7 +257,7 @@ const  sendTranscriptionToBackend = async (transcription) => {
             onChange={handleFileUpload}
           />
             <label htmlFor="fileInput" className="text-secondary cursor-pointer" style={{userSelect: "none"}}>
-            <a  href="#"
+            <a  href=""
              onClick={handleFileUpload}
             >  <GrFormAttachment  size={30}/> </a>
             </label>

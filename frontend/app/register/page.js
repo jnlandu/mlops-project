@@ -103,7 +103,7 @@ const SignUp = () => {
                     </form>
                     <div className="container mt-3">
                       <small>Do you already have an account? </small> 
-                      <a className="text-primary" href="#"
+                      <a className="text-primary" href=""
                       onClick={() => router.push('/login')}
                       
                       >Sign in</a>
