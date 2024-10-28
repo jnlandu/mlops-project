@@ -32,6 +32,7 @@ const Home = ( ) => {
   const [messageToSpeak, setMessageToSpeak] = useState("");
   const [questtionAreaState, setQuestionAreaState] = useState(false);
   const [micOn, setMicOn] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
  
   const endOfMessagesRef = useRef(null);
   const [answered, setAnswered] = useState(false);
@@ -47,8 +48,7 @@ const Home = ( ) => {
   const [vision, setVision] = useState(false)
 
   // Backend API URL
-  const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat` //?? http://localhost:8000/chat`;
-
+  let apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat` //?? http://localhost:8000/chat`;
 
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -103,7 +103,7 @@ const Home = ( ) => {
   };
 
 //  Function to trigger the voice recognition
-const startVoiceRecognition = (event) => {
+const startVoiceRecognition =  (event) => {
   // Prevent default behavior
   if (event) {
     event.preventDefault();
@@ -115,6 +115,7 @@ const startVoiceRecognition = (event) => {
   }
   //  Change the state of the mic icon
   setMicOn(true);
+  setIsRecording(true);
 
   // Use WebkitSpeechRecognition for Chrome or SpeechRecognition for other browsers
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -124,12 +125,12 @@ const startVoiceRecognition = (event) => {
   recognition.interimResults = false;  //only final results
 
   // When a result is received
-  recognition.onresult = (event) => {
+  recognition.onresult =  async (event) => {
     const transcript = event.results[0][0].transcript;
     // setChatMessages([...chatMessages, { text: transcript, sender: 'user' }]);
     // setTranscriptedMessage(transcript);
     setMessage(transcript);
-    sendTranscriptionToBackend(transcript);
+    await sendTranscriptionToBackend(transcript);
     setMicOn(false);
   };
 
@@ -144,6 +145,11 @@ const startVoiceRecognition = (event) => {
 
 };
 
+const stopRecording = () => {
+  recognition.stop();
+  setMicOn(false);
+  setIsRecording(false);
+}
 const  sendTranscriptionToBackend = async (transcription) => {
   if (transcription.trim() !== "") {
     const storedToken = localStorage.getItem('token');
@@ -167,7 +173,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
   return (
     <ProtectedRoute>
         <Header/>
-       <div className="container mt-2">
+        <div className='welcome-container'>
+
         <Welcome 
          textHeader='Start chatting or summarizing  your texts with OkapiChat! '
         textBody='
@@ -175,13 +182,14 @@ const  sendTranscriptionToBackend = async (transcription) => {
         Try to send it a long message and see how it summarizes it.
          ' /> 
 
-        <>
+        </div>
+       <div className="main-chat-container container mt-2">
         <div className=" chat-container ms-3 me-3">
           {/* <div className=""> */}
             {chatMessages.map((msg, index) => (
               <div key={index} className={  ` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
                 <span className={`${msg.sender === 'bot' ? ' me-2 mt-2' : 'mt-1'}`}>
-                  {msg.sender === 'bot' &&
+                  {msg.sender === 'bot' ?
                   
                   <Image
                   src="/assets/images/okapi.jpg"
@@ -189,7 +197,17 @@ const  sendTranscriptionToBackend = async (transcription) => {
                   width={24}
                   height={24}
                   className='rounded-circle'
-                  />}
+                  />:
+                  <Image
+                  src="/assets/icons/user.svg"
+                  alt="robot"
+                  width={24}
+                  height={24}
+                  className='rounded-circle'
+                  />
+                  
+                  
+                  }
                 </span>
                 <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify '}  me-1 mt-1 `}>
                   <p className='text-secondary' id='transcription'>
@@ -234,12 +252,12 @@ const  sendTranscriptionToBackend = async (transcription) => {
             onClick={startVoiceRecognition} 
             cursor='pointer'
           >
-            {micOn ? <IoMdMic size={25} /> : <IoMdMicOff size={25} />}
+            {micOn  ? isRecording &&  <IoMdMic size={25} /> : <IoMdMicOff size={25} />}
           </a>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="form-control"
+            className="form-control p-2"
             placeholder="Type your message here..."
             rows="2"
           ></textarea>
@@ -268,8 +286,7 @@ const  sendTranscriptionToBackend = async (transcription) => {
             <IoMdSend />
           </button>
         </div>
-        </>
-      </div>
+        </div>
     </ProtectedRoute>
   );
 

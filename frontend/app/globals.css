@@ -21,7 +21,8 @@
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: visible !important;
+  overflow: visible !important;
   margin-left: 10px !important;
   margin-right: 10px !important;
 }
@@ -32,7 +33,8 @@ body {
   body {
     /* display: flex; */
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: visible !important;
+    overflow: visible !important;
     /* margin-left: 8vw !important;
     margin-right: 8vw !important; */
   }
@@ -41,9 +43,11 @@ body {
   html,
   body {
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: visible !important;
+    overflow: visible !important;
     margin-left: 10vw !important;
     margin-right: 10vw !important;
+
   }
 }
 
@@ -85,42 +89,33 @@ a {
   /* margin-right: 100px !important; */
   z-index: 1030; /* High z-index to ensure it remains on top */
 }
-
+.body-container {
+  margin-top: 10px !important; /* Add top margin to the body container equal to the header height */
+  overflow: visible;
+}
 .header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-right: 100px !important; */
-
-  /* Position sticky */
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1000;
-  /* background-color: var(--foreground); */
-  /* color: var(--background); */
-
-  
-  /* color: var(--background); */
   box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
 }
-.header-sticky {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  /* backgroun
-  d-color: white; */
-  width: 100%;
-}
+
 /* d-flex justify-content-end align-items-center  */
 .github-logout-btn {
 margin-right: 10px !important;
 }
+.welcome-container{
+  margin-top: 50px;
+  overflow: visible !important;
+}
 
 .welcome {
+  position: sticky !important;
   width: 80%;
-  /* height: 20%; */
-  margin-top: 50px;
   text-align: center;
   padding: 3px;
   border: 1px solid #3e3636;
@@ -128,14 +123,20 @@ margin-right: 10px !important;
   box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
 }
 
+.main-chat-container {
+  margin-top: 10px;
+  overflow: visible !important;
+}
+
 .chat-container {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
   padding-top: 70px; /* Add top padding to the chat container equal to the header height */
   margin-top: 10px;
 }
 
 .login{
   margin-top: 200px;
-
 }
 
 .btn{

@@ -25,7 +25,6 @@ const Header = () => {
   }, []);
 
   return (
-    // <div style={{ position: 'sticky', top: '0', zIndex: '1000', width: '100%' }}>
     <div className='mt-3 mb-4  header' >
        <div className="user-initials ms-2 py-4 px-4">
             {initials}
