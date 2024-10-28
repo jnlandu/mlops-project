@@ -10,12 +10,9 @@ router = APIRouter(
     tags=['Summarize or Chat']
 )
 
-roles = ["system", "user", "assistant"]
+# roles = ["system", "user", "assistant"]
 
 chat_history = []
-@router.get('/')
-async def get_chat():
-    return {"messages": chat_history}
 
 @router.post('/')
 async def chat(
@@ -31,7 +28,8 @@ async def chat(
                         "content": chat_request.content,
                     }
                 ],
-                model="mixtral-8x7b-32768",
+                # model="mixtral-8x7b-32768",
+                 model="llama3-8b-8192",
             )
             response_message = chat_completion.choices[0].message.content
             chat_history.append(chat_request.content)  # Store user message
