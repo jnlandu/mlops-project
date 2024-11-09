@@ -283,7 +283,10 @@ const  sendTranscriptionToBackend = async (transcription) => {
         </div>
         <div className='text-center mt-2'>
           <p className='small text-secondary'>OkapiChat can  make mistakes. <br/>
-          This is a test application. We are working on improving it. Your feedback is welcome.
+          This is a test application. We are working on improving it. Your feedback is 
+          <a href='mailto: jnlandu00@gmail.com' className='text-brand-secondary'
+          // onClick={() => router.push('/feedback')}
+          > welcome.</a>
           </p>
          </div>
         </div>
