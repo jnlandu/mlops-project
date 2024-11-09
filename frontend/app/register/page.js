@@ -52,7 +52,7 @@ const SignUp = () => {
                     <div className="mx-auto">
                         <Image 
                             alt="brand"
-                            src="/assets/icons/dalle.svg"
+                            src="/assets/images/brand.png"
                             width={1000}
                             height={1000}
                             className="d-none d-md-block h-100 w-100"
@@ -65,7 +65,7 @@ const SignUp = () => {
             <div className="col-md-6 d-flex flex-column  mb-2 mt-4">
                 <div className="intro-text mt-5">
                     <h1 className="mb-1">Welcome 👋!</h1>
-                    <p className="mb-4">Create a free account to start generating summary for your text documents, and more.
+                    <p className="small mb-4">Create a free account to start generating summary for your text documents, and more.
                     </p>
                 </div>
                 <section className="login-section container">
@@ -75,7 +75,7 @@ const SignUp = () => {
                             <label htmlFor="registerEmail" className="form-label">Email</label>
                             <input 
                                 type="email" 
-                                className="form-control" 
+                                className="input form-control" 
                                 id="registerEmail"
                                 value={registerEmail}
                                 placeholder="Enter your email"
@@ -87,7 +87,7 @@ const SignUp = () => {
                             <label htmlFor="registerPassword" className="form-label">Password</label>
                             <input 
                                 type="password" 
-                                className="form-control" 
+                                className="input form-control" 
                                 id="registerPassword"
                                 value={registerPassword}
                                 placeholder="Enter your password"
@@ -103,7 +103,7 @@ const SignUp = () => {
                     </form>
                     <div className="container mt-3">
                       <small>Do you already have an account? </small> 
-                      <a className="text-primary" href=""
+                      <a className="text-brand-secondary" href=""
                       onClick={() => router.push('/login')}
                       
                       >Sign in</a>

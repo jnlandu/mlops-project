@@ -35,13 +35,13 @@ const Login = () => {
                 <h6 className="small">Okapi AI </h6>
             </span>
         </div>
-
+            {/* Left side bar  */}
         <div className="container row  d-flex " >
                 <section className="col-md-6 d-flex flex-column justify-content-center mt-5">
                         <div className="mx-auto">
                             <Image 
                                 alt="brand"
-                                src="/assets/icons/dalle.svg"
+                                src="/assets/images/brand.png"
                                 width={1000}
                                 height={1000}
                                 className="d-none d-md-block  "
@@ -54,7 +54,7 @@ const Login = () => {
                 <div className="col-md-6 d-flex flex-column  mb-2 mt-4">
                     <div className="intro-text mt-5">
                         <h1 className="mb-1">Welcome 👋!</h1>
-                        <p className="mb-4">Sign in to your account to generate summary for your text documents, or chat and 
+                        <p className="mb-4 small">Sign in to your account to generate  chat and 
                             make image classification with our  latest AI models.
                         </p>
                     </div>
@@ -65,7 +65,7 @@ const Login = () => {
                                 <label htmlFor="Email" className="form-label">Email</label>
                                 <input 
                                     type="text" 
-                                    className="form-control" 
+                                    className="input form-control" 
                                     id="Email" 
                                     value={Email} 
                                     placeholder="Enter your email"
@@ -77,7 +77,7 @@ const Login = () => {
                                 <label htmlFor="password" className="form-label">Password</label>
                                 <input 
                                     type="password" 
-                                    className="form-control" 
+                                    className="input form-control" 
                                     id="password"
                                     value={password}
                                     placeholder="Enter your password"
@@ -88,7 +88,7 @@ const Login = () => {
                                     <small className="small">Forgot password?</small>
                                 </a>
                             </div>
-                            <button type="submit" className="btn btn-primary w-100">
+                            <button type="submit" className="btn  w-100">
                                 {loading ? (
                                     <Spinner animation="border" role="status" />
                                 ) : 'Sign In'}
@@ -98,16 +98,15 @@ const Login = () => {
                      <div className="d-flex mt-2 gap-2 justify-content-between">
                         <div className="d-flex mt-2 gap-2">
                             <small className="small mt-0">Don't have an account yet?</small>
-                            <small><a className="text-brand mt-0" href="#" onClick={() => router.push('/register/')}
-                                // style={{ textDecoration: 'none' , color: 'red'}}
+                            <small className="text-brand-secondary"><a className=" mt-0" href="#" onClick={() => router.push('/register/')}
                                 >
                                 Sign up
                             </a>
                             </small>
                         </div>
                         <div className="text-end mt-2">
-                            <a href="" onClick={() => router.push('/admin/login')}>
-                                <small className="text-brand">Admin?</small>
+                            <a href="" className="text-brand-secondary" onClick={() => router.push('/admin/login')}>
+                                <small className="">Admin?</small>
                             </a>
                         </div>
                     </div>
