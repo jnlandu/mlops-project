@@ -48,8 +48,7 @@ const Home = ( ) => {
   const [vision, setVision] = useState(false)
 
   // Backend API URL
-  let apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat` //?? http://localhost:8000/chat`;
-
+  let apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat/` //?? http://localhost:8000/chat`;
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
