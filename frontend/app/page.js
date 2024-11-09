@@ -126,8 +126,6 @@ const startVoiceRecognition =  (event) => {
   // When a result is received
   recognition.onresult =  async (event) => {
     const transcript = event.results[0][0].transcript;
-    // setChatMessages([...chatMessages, { text: transcript, sender: 'user' }]);
-    // setTranscriptedMessage(transcript);
     setMessage(transcript);
     await sendTranscriptionToBackend(transcript);
     setMicOn(false);
@@ -173,12 +171,10 @@ const  sendTranscriptionToBackend = async (transcription) => {
     <ProtectedRoute>
         <Header/>
         <div className='welcome-container'>
-
         <Welcome 
          textHeader='Start chatting or summarizing  your texts with OkapiChat! '
         textBody='
-         A simple text summarization and conversational application built with React, Next.js, and FastAPI.
-        Try to send it a long message and see how it summarizes it.
+         A text summarization and conversational application built with React, Next.js, and FastAPI.
          ' /> 
 
         </div>
@@ -187,7 +183,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
           {/* <div className=""> */}
             {chatMessages.map((msg, index) => (
               <div key={index} className={  ` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
-                <span className={`${msg.sender === 'bot' ? ' me-2 mt-2' : 'mt-1'}`}>
+                <span className={`${msg.sender === 'bot' ? 'text-justify  me-2 mt-2' : 'text-justify mt-1'}`}>
+                  {/*  Bot message */}
                   {msg.sender === 'bot' ?
                   
                   <Image
@@ -197,15 +194,14 @@ const  sendTranscriptionToBackend = async (transcription) => {
                   height={24}
                   className='rounded-circle'
                   />:
+
                   <Image
                   src="/assets/icons/user.svg"
-                  alt="robot"
+                  alt="user"
                   width={24}
                   height={24}
                   className='rounded-circle'
                   />
-                  
-                  
                   }
                 </span>
                 <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify '}  me-1 mt-1 `}>
@@ -233,14 +229,13 @@ const  sendTranscriptionToBackend = async (transcription) => {
                 <a cursor='pointer'><LuRefreshCcw size={20}/></a>
               </span>
             <span className='d-flex justify-between  text-end gap-2'>
-            summary length: {outputLength}
+            Text length: {outputLength}
             </span>
             </div>: ''}
             </>
             <div ref={endOfMessagesRef} />
           {/* </div> */}
         </div>
-
         {/*  Question input: */}
         <div  className="mb-0 text-center">
           <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it. </p>
@@ -270,7 +265,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
            {/* Attachment Icon */}
           <input 
             type="file" 
-            id="fileInput" 
+            id="fileInput disabled" 
+            aria-label='disabled'
             className="d-none" 
             onChange={handleFileUpload}
           />
@@ -285,6 +281,13 @@ const  sendTranscriptionToBackend = async (transcription) => {
             <IoMdSend />
           </button>
         </div>
+        <div className='text-center mt-2'>
+          <p className='small text-secondary'>OkapiChat can  make mistakes. <br/>
+          This is a test application. We are working on improving it.
+          </p>
+          <p className='small text-secondary'>Powered by Okapi AI &copy; 2024</p>
+          <p className='small text-secondary'>All rights reserved. Jeremie Mabiala</p>
+         </div>
         </div>
     </ProtectedRoute>
   );

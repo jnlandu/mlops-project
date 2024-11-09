@@ -4,12 +4,7 @@ import React from 'react'
 const Welcome = ({textBody, textHeader}) => {
   return (
     <div className="container text-center welcome">
-       <div className='mb-2 mt-1'>
-         <h1 className='mb-0'> Welcome! </h1>
-          <small className="h6 mt-0 mb-2 small">
-          Okapi AI, Making your life easier is our priority.
-          </small>
-         </div>
+         <h1 className='mb-0 text-bold'> Welcome! </h1>
           <p> 
             <span className="mb-2">
               {textHeader} <br/>
