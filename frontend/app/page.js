@@ -40,11 +40,12 @@ const Home = ( ) => {
   const [transcriptedMessage, setTranscriptedMessage] = useState('');
 
 
+
   const [predictedClass, setPredictedClass] = useState('');
   const [image, setImage] = useState('');
   const [imageSrc, setImageSrc] = useState('');
   const [error, setError] = useState('');
-  const [test, setTest] = useState('Empty');
+  const [submitClicked, setSubmitClicked] = useState(false);
 
   const [vision, setVision] = useState(false)
 
@@ -57,6 +58,16 @@ const Home = ( ) => {
 
   const handleSend = async () => {
     if (message.trim() !== "") {
+      // Feature to include for paid and unpaid users:
+      //  Limit the number of characters to 500 characters for the user input
+      if (message.length > 500) {
+        alert('You are on a Free option. The message is too long. Please limit it to 500 characters. Upgrade to a paid plan to send longer messages.');
+        return;
+      }
+
+
+
+      // Send the message to the backend
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
         try {
@@ -68,18 +79,21 @@ const Home = ( ) => {
             },
             
           });
-          setTest(response.data.response)
-          console.log('Response:', response.data.response)
+          setSubmitClicked(true);
           setChatMessages([...chatMessages, { text: message, sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
           setMessageToSpeak(response.data.response)
           setOutputLength(response.data.response.length);
+          // Clear the input field:
+          setMessage('');
           setAnswered(true);
         } catch (error) {
           console.error('Sending message failed:', error);
           setAnswered(false);
+          setSubmitClicked(false);
         } 
       }
     }
+ 
   };
 
   //  Speech: text-to-speech functionality
@@ -186,7 +200,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
 
         </div>
        <div className="main-chat-container container mt-2">
-        <div className=" chat-container ms-3 me-3">
+        {/* Chat messages */}
+        <div className={ `${submitClicked ? 'chat-container-with-border ms-3 me-3': 'chat-container ms-3 me-3'}`} >
           {/* <div className=""> */}
             {chatMessages.map((msg, index) => (
               <div key={index} className={  ` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
@@ -259,11 +274,17 @@ const  sendTranscriptionToBackend = async (transcription) => {
           </a>
           <textarea
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
             className="form-control p-2"
             placeholder="Type your message here..."
-            rows="2"
-          ></textarea>
+            rows={Math.min(10, Math.max(2, Math.ceil(message.length / 20)))}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+          />
           {/*  Vision model, Camera:  */}
           <a
            onClick={() => router.push('/vision')} className='ms-2'
@@ -285,7 +306,7 @@ const  sendTranscriptionToBackend = async (transcription) => {
             >  <GrFormAttachment  size={30}/> </a>
             </label>
           {/* Send Button */}
-          <button onClick={handleSend} className="btn send-btn"
+          <button onClick={handleSend} className="btn send-btn" id='submit'
           >
             <IoMdSend />
           </button>
