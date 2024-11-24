@@ -2,6 +2,7 @@
 
 import {  useState, useEffect, useRef} from 'react';
 import axios from 'axios';
+import { Modal, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/js/bootstrap.bundle.min';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Header from '../components/Header';
@@ -20,7 +21,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoCameraOutline } from "react-icons/io5";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 
 
@@ -36,6 +36,7 @@ const Home = ( ) => {
  
   const endOfMessagesRef = useRef(null);
   const [answered, setAnswered] = useState(false);
+  const [userAbort, setUserAbort] = useState(false);
   const [outputLength, setOutputLength] = useState(0);  
   const [transcriptedMessage, setTranscriptedMessage] = useState('');
 
@@ -61,12 +62,10 @@ const Home = ( ) => {
       // Feature to include for paid and unpaid users:
       //  Limit the number of characters to 500 characters for the user input
       if (message.length > 500) {
+         setUserAbort(true);
         alert('You are on a Free option. The message is too long. Please limit it to 500 characters. Upgrade to a paid plan to send longer messages.');
         return;
       }
-
-
-
       // Send the message to the backend
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
@@ -192,20 +191,43 @@ const  sendTranscriptionToBackend = async (transcription) => {
     <ProtectedRoute>
         <Header/>
         <div className='welcome-container'>
-        <Welcome 
-         textHeader='Start chatting or summarizing  your texts with OkapiChat! '
-        textBody='
-         A text summarization and conversational application built with React, Next.js, and FastAPI.
-         ' /> 
-
+          <Welcome 
+          textHeader='Start chatting or summarizing  your texts with OkapiChat! '
+          textBody='
+          A text summarization and conversational application built with React, Next.js, and FastAPI.
+          ' /> 
         </div>
+        {/*  Modal to alert the user of the limit of the characters: */}
+        {userAbort ?  (
+          <div
+          className="modal show"
+          style={{ display: 'block', position: 'initial' }}
+        >
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal title</Modal.Title>
+            </Modal.Header>
+    
+            <Modal.Body>
+              <p>Modal body text goes here.</p>
+            </Modal.Body>
+    
+            <Modal.Footer>
+              <Button variant="secondary">Close</Button>
+              <Button variant="primary">Save changes</Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </div>
+        ): ''
+      }
+
+
        <div className="main-chat-container container mt-2">
         {/* Chat messages */}
         <div className={ `${submitClicked ? 'chat-container-with-border ms-3 me-3': 'chat-container ms-3 me-3'}`} >
-          {/* <div className=""> */}
             {chatMessages.map((msg, index) => (
               <div key={index} className={  ` d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
-                <span className={`${msg.sender === 'bot' ? 'text-justify  me-2 mt-2' : 'text-justify mt-1'}`}>
+                <span className={` ${msg.sender === 'bot' ? 'text-justify  me-2 mt-2' : 'text-justify mt-1'}`}>
                   {/*  Bot message */}
                   {msg.sender === 'bot' ?
                   
@@ -226,8 +248,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
                   />
                   }
                 </span>
-                <div className={ `${msg.sender === 'user' ? 'd-flex ms-2  text-justify' : ' text-justify '}  me-1 mt-1 `}>
-                  <p className='text-secondary' id='transcription'>
+                <div className={ ` ${msg.sender === 'user' ? 'user d-flex ms-2  text-justify' : ' assistant text-justify '}  me-1 mt-1 `}>
+                  <p className='text-secondary ' id='transcription'>
                     {msg.text }
                   </p> 
                 </div>
@@ -276,7 +298,7 @@ const  sendTranscriptionToBackend = async (transcription) => {
             value={message}
             className="form-control p-2"
             placeholder="Type your message here..."
-            rows={Math.min(10, Math.max(2, Math.ceil(message.length / 20)))}
+            rows={Math.min(10, Math.max(2, Math.ceil(message.length / 100)))}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {

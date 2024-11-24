@@ -99,6 +99,26 @@ a {
   background-color: #412424;
 }
 
+.user{
+  max-width: 40vw;
+  border: 1px solid red;
+  color: #171717;
+  background-color: #ededed;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
+}
+.assistant{
+  width: 40vw;
+  border: 1px solid blue;
+  color: #171717;
+  background-color: #ededed;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgb(169, 100, 100) !important;
+}
 .input {
   /* color: var(--foreground); */
   padding: 10px;
