@@ -245,8 +245,8 @@ const  sendTranscriptionToBackend = async (transcription) => {
         </div>
         {/*  Question input: */}
         <div  className="mb-0 text-center">
-          <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it. <br/>
-            {apiUrl}
+          <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it.
+            {/* {apiUrl} */}
          </p>
         </div>
        <div className="question-input d-flex align-items-center gap-1">
