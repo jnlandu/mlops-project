@@ -44,11 +44,13 @@ const Home = ( ) => {
   const [image, setImage] = useState('');
   const [imageSrc, setImageSrc] = useState('');
   const [error, setError] = useState('');
+  const [test, setTest] = useState('Empty');
 
   const [vision, setVision] = useState(false)
 
   // Backend API URL
-  let apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat/` //?? http://localhost:8000/chat`;
+  let apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}` + '/chat/' 
+  // let apiUrl = "https://na.azurewebsites.net/chat"
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
@@ -58,11 +60,16 @@ const Home = ( ) => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
         try {
-          // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/chat`;
           const response = await axios.post(apiUrl, { content: message }, {
-            headers: { Authorization: `Bearer ${storedToken}` },
+            headers: { 
+              'accept': 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${storedToken}` 
+            },
             
           });
+          setTest(response.data.response)
+          console.log('Response:', response.data.response)
           setChatMessages([...chatMessages, { text: message, sender: 'user' }, { text: response.data.response, sender: 'bot' }]);
           setMessageToSpeak(response.data.response)
           setOutputLength(response.data.response.length);
@@ -238,7 +245,9 @@ const  sendTranscriptionToBackend = async (transcription) => {
         </div>
         {/*  Question input: */}
         <div  className="mb-0 text-center">
-          <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it. </p>
+          <p className='text-secondary mb-1 mt-3'>Ask a question. Type or Speak it. <br/>
+            {apiUrl}
+         </p>
         </div>
        <div className="question-input d-flex align-items-center gap-1">
           <a href=""
@@ -265,9 +274,9 @@ const  sendTranscriptionToBackend = async (transcription) => {
            {/* Attachment Icon */}
           <input 
             type="file" 
-            id="fileInput disabled" 
+            id="fileInput" 
             aria-label='disabled'
-            className="d-none" 
+            className="d-none disabled" 
             onChange={handleFileUpload}
           />
             <label htmlFor="fileInput" className="text-secondary cursor-pointer" style={{userSelect: "none"}}>

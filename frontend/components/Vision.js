@@ -21,7 +21,7 @@ const Vision = () => {
     const canvasRef = useRef(null);
     const [image, setImage] = useState('');
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict/`;
 
     // Start the video stream from the camera
     const startVideo = () => {

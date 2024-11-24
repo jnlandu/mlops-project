@@ -11,13 +11,13 @@ const SignUp = () => {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+//   const [error, setError] = useState('');
   const router = useRouter();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/auth` // ?? http://localhost:8000/auth`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/auth/` // ?? http://localhost:8000/auth`;
       const response = await axios.post(apiUrl, { // Ensure the trailing slash if your backend setup requires it
         username: registerEmail, // Changed 'Email' to 'username' if your backend expects 'username'
         password: registerPassword,
@@ -28,6 +28,8 @@ const SignUp = () => {
       setLoading(false); // hide the spinner
     } catch(error) {
       console.error('Failed to register user:', error.response ? error.response.data : error);
+      setLoading(false); // hide the spinner
+
     }
   }
   
@@ -103,10 +105,9 @@ const SignUp = () => {
                     </form>
                     <div className="container mt-3">
                       <small>Do you already have an account? </small> 
-                      <a className="text-brand-secondary" href=""
-                      onClick={() => router.push('/login')}
+                      <small  className="text-brand-secondary"> <a href='' className=" mt-0" onClick={() => router.push('/login/')}
                       
-                      >Sign in</a>
+                      >Sign in </a></small>
                     </div>
                 </section>
             </div>

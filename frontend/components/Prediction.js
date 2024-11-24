@@ -23,7 +23,7 @@ const Predict = () => {
 
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict`;
+            const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict/`;
             try {
                 const response = await axios.post(apiUrl, formData, {
                     headers: {

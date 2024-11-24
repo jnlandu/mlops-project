@@ -100,7 +100,7 @@ a {
 }
 
 .input {
-  color: var(--foreground);
+  /* color: var(--foreground); */
   padding: 10px;
   border: 1px solid #3e3636;
   border-radius: 10px;
@@ -155,7 +155,7 @@ margin-right: 10px !important;
 }
 
 .chat-container {
-  border: 1px solid #3e3636;
+  /* border: 1px solid #3e3636; */
   border-radius: 10px;
   overflow-x: hidden !important;
   overflow-y: auto !important;

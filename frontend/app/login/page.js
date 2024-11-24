@@ -98,7 +98,7 @@ const Login = () => {
                      <div className="d-flex mt-2 gap-2 justify-content-between">
                         <div className="d-flex mt-2 gap-2">
                             <small className="small mt-0">Don't have an account yet?</small>
-                            <small className="text-brand-secondary"><a className=" mt-0" href="#" onClick={() => router.push('/register/')}
+                            <small className="text-brand-secondary"><a className=" mt-0" href="" onClick={() => router.push('/register/')}
                                 >
                                 Sign up
                             </a>

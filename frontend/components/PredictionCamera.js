@@ -13,7 +13,7 @@ const Predict = () => {
     const [isCameraOn, setIsCameraOn] = useState(false);
     const canvasRef = useRef(null);
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict/`;
 
     // Start the video stream from the camera
     const startVideo = () => {
@@ -43,7 +43,7 @@ const Predict = () => {
             const base64Data = imageSrc.replace(/^data:image\/[a-z]+;base64,/, "");
             formData.append('file', base64Data);
 
-            const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict`;
+            // const apiUrl = `${process.env.NEXT_PUBLIC_FASTAPI_API_URL}/predict/`;
             const response = await axios.post(apiUrl, formData, {
                 headers: {
                     'Content-Type': 'application/json',

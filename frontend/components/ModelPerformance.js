@@ -5,7 +5,7 @@ const ModelPerformance = () => {
     const [url, setUrl] = useState('');
     const [windowSize, setWindowSize] = useState(300);
     const [error, setError] = useState('');
-    const apiUrl = process.env.NEXT_PUBLIC_FASTAPI_API_URL + "/monitor-model/?window_size=300";
+    const apiUrl = process.env.NEXT_PUBLIC_FASTAPI_API_URL + "/monitor-model/?window_size=300/";
     
 
     useEffect(() => {
