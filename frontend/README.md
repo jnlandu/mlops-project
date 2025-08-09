@@ -1,36 +1,187 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OkapiChat Frontend
 
-## Getting Started
+A modern, responsive frontend for the OkapiChat text summarization and conversational AI application built with Next.js, React, and TypeScript.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 💬 **Real-time Chat Interface**: Interactive chat with AI-powered responses
+- 📝 **Text Summarization**: Upload files (TXT, PDF, images) for AI summarization
+- 🎙️ **Voice Input**: Speech-to-text functionality for hands-free interaction
+- 🔊 **Text-to-Speech**: Listen to AI responses with built-in speech synthesis
+- 📱 **Responsive Design**: Mobile-first design that works on all devices
+- 🔐 **Authentication**: Secure user authentication and session management
+- 📄 **File Processing**: Support for multiple file formats with drag-and-drop
+- 🎨 **Modern UI**: Clean, accessible interface with Bootstrap components
+- ⚡ **Performance Optimized**: Fast loading with Next.js optimizations
+
+## 📁 Project Structure
+
+```
+frontend/
+├── src/                          # Source code (new organized structure)
+│   ├── components/              # Reusable components
+│   │   ├── ui/                 # Basic UI components (Button, Input, Modal, etc.)
+│   │   ├── chat/               # Chat-specific components
+│   │   └── layout/             # Layout components
+│   ├── hooks/                  # Custom React hooks
+│   ├── services/               # API service layer
+│   ├── utils/                  # Utility functions and configurations
+│   └── types/                  # TypeScript type definitions
+├── app/                        # Next.js app directory
+│   ├── globals.css            # Global styles
+│   ├── layout.js              # Root layout
+│   ├── page.js                # Home page (old structure)
+│   ├── page-new.js            # Home page (new structure)
+│   ├── login/                 # Login page
+│   ├── register/              # Registration page
+│   ├── admin/                 # Admin dashboard
+│   └── vision/                # Vision/camera feature
+├── components/                # Legacy components (to be migrated)
+├── public/                    # Static assets
+├── package.json              # Dependencies and scripts
+└── README.md                 # This file
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Technology Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 14 (App Router)
+- **Language**: JavaScript/TypeScript
+- **UI Library**: React 18
+- **Styling**: Bootstrap 5 + Custom CSS
+- **Icons**: React Icons
+- **HTTP Client**: Axios
+- **Speech**: Web Speech API
+- **File Handling**: HTML5 File API with drag-and-drop
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Quick Start
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18.0.0 or higher
+- npm 8.0.0 or higher
+- Backend API running (see backend README)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up environment variables**
+   ```bash
+   cp .env.local.example .env.local
+   # Edit .env.local with your configuration
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```bash
+# Backend API URL
+NEXT_PUBLIC_FASTAPI_API_URL=http://localhost:8000
+
+# Admin access
+NEXT_PUBLIC_ADMIN_PASSKEY=your-admin-passkey
+```
+
+## 📝 Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint and fix issues |
+| `npm run type-check` | Run TypeScript type checking |
+| `npm run format` | Format code with Prettier |
+
+## 🎨 Component Architecture
+
+### New Organized Structure
+
+The frontend has been reorganized with a modern, scalable architecture:
+
+#### Core Components (`src/components/`)
+
+- **UI Components** (`ui/`): Reusable basic components
+- **Chat Components** (`chat/`): Chat-specific functionality
+- **Layout Components** (`layout/`): Page layout components
+
+#### Custom Hooks (`src/hooks/`)
+
+- `useAuth.js` - Authentication state management
+- `useChat.js` - Chat functionality and message handling
+- `useSpeech.js` - Speech recognition and synthesis
+
+#### Services (`src/services/`)
+
+- `authService.js` - Authentication API calls
+- `chatService.js` - Chat and AI API calls
+- `fileService.js` - File processing utilities
+
+#### Utilities (`src/utils/`)
+
+- `config.js` - Application configuration
+- `api.js` - HTTP client setup and interceptors
+- `helpers.js` - Common utility functions
+
+## 🚀 Performance Optimizations
+
+- **Code Splitting**: Automatic route-based code splitting with Next.js
+- **Image Optimization**: Next.js Image component for optimized loading
+- **Lazy Loading**: Dynamic imports for non-critical components
+- **Caching**: Proper HTTP caching headers for static assets
+
+## 📱 Responsive Design
+
+The application is built with mobile-first responsive design supporting mobile, tablet, and desktop views.
+
+## 🔒 Security
+
+- Input sanitization
+- CSRF protection
+- Secure authentication token handling
+- Environment variable validation
+
+## 📦 Deployment
+
+### Production Build
+
+```bash
+npm run build
+npm run start
+```
+
+### Vercel Deployment
+
+The application is optimized for Vercel deployment.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Follow the new organized structure
+4. Add tests for new features
+5. Ensure code formatting and linting
+6. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.

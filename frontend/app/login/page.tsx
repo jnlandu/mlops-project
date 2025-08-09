@@ -1,24 +1,27 @@
 'use client';
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthContext from "../../context/AuthContext";
-
-import PropTypes from "prop-types";
+import { useAuth } from "../../src/hooks/useAuth";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Image from "next/image";
 
 const Login = () => {
     const router = useRouter();
-    const { login } = useContext(AuthContext);
-    const [Email, setEmail] = useState('');
+    const { login, isLoading } = useAuth();
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);  // show the spinner
-        await login(Email, password);
-        setLoading(false); // hide the spinner
+        setError('');
+        
+        try {
+            await login(username, password);
+            // Navigation is handled in the login function
+        } catch (error: any) {
+            setError(error.message || 'Login failed. Please try again.');
+        }
     };
 
     return (
@@ -60,16 +63,21 @@ const Login = () => {
                     </div>
                     <section className="login-section container">
                         <h2 className="mb-4">Sign in</h2>
+                        {error && (
+                            <div className="alert alert-danger" role="alert">
+                                {error}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label htmlFor="Email" className="form-label">Email</label>
+                                <label htmlFor="username" className="form-label">Username</label>
                                 <input 
                                     type="text" 
                                     className="input form-control" 
-                                    id="Email" 
-                                    value={Email} 
-                                    placeholder="Enter your email"
-                                    onChange={(e) => setEmail(e.target.value)} 
+                                    id="username" 
+                                    value={username} 
+                                    placeholder="Enter your username"
+                                    onChange={(e) => setUsername(e.target.value)} 
                                     required 
                                 />
                             </div>
@@ -88,8 +96,8 @@ const Login = () => {
                                     <small className="small">Forgot password?</small>
                                 </a>
                             </div>
-                            <button type="submit" className="btn  w-100">
-                                {loading ? (
+                            <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
+                                {isLoading ? (
                                     <Spinner animation="border" role="status" />
                                 ) : 'Sign In'}
                             </button>
@@ -115,10 +123,6 @@ const Login = () => {
         </div>
 </div>
     );
-};
-
-Login.propTypes = {
-    searchParams: PropTypes.object,
 };
 
 export default Login;

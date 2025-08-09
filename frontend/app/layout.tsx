@@ -1,10 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import "./globals.css";
-import { AuthProvider } from '../context/AuthContext';
+import { AuthProvider } from '../src/hooks/useAuth';
 import Footer from '../components/Footer';
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <AuthProvider>
     <html lang="en">
