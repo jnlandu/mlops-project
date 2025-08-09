@@ -2,6 +2,14 @@ app/
 frontend/
 draft/
 
+.venv/
+
+backend/.venv/
+backend/venv/
+backend/env/
+
+backend/data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
