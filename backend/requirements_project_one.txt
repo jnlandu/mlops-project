@@ -1,0 +1,24 @@
+python-dotenv
+# PyPDF2
+bcrypt
+pytest
+httpx
+groq  # in case sanity requires groq
+evidently # in case we need to do model monitoring
+SQLAlchemy
+python-jose
+passlib
+pandas
+numpy
+torch
+torchvision
+matplotlib
+fastapi
+uvicorn
+Pillow
+python-multipart
+
+
+
+
+ 

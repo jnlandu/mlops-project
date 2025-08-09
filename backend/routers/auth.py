@@ -69,6 +69,3 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     
     return {'access_token': token, 'token_type': 'bearer'}
     
-# @router.get("/verify-token")
-# async def verify_token(current_user: dict = user_dependency):
-#     return current_user

@@ -33,31 +33,77 @@ pip install -r requirements.txt
 
 ```GraphQL
 .
-├── app                                          # FastAPI app
-│   ├── __init__.py
-│   ├── app.py
-│   └── main.py
-├── mockup                                       # Frontend mockup
-│   ├── SignUp.png
-│   ├── accountSuccessfullyCreated.png
-│   ├── loginlogin.png
-│   └── updateUserInfoConfirmation.png
-├── tests                                        # Test functions
-│   ├── __init__.py
-│   ├── sample.pdf                               # Sample PDF file for testing
-│   ├── sample.txt                               # Sample text file for testing
-│   ├── test_auth.py
-│   ├── tpdf.py                                  # Test functions for PDF files. Currently, not available.
-│   └── ttxt.py                                  # Test functions for text files. Currently, not available.
-└── utils                                        # Utility functions
-|   ├── __init__.py
-|   ├── api.py                                   # To initialize the groq API
-|   ├── auth.py                                  # To handle user authentication
-|   ├── pdf.py                                   # To handle PDF files
-|   └── summarizer.py                            # To summarize text, Transformers-based model
-├── Dockerfile                                   # Docker configuration
-├── requirements.txt                             # Dependencies
 ├── README.md
+├── backend
+│   ├── Dockerfile
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── app.py
+│   │   └── main.py
+│   ├── local.settings.json
+│   ├── mockup
+│   │   ├── SignUp.png
+│   │   ├── accountSuccessfullyCreated.png
+│   │   ├── loginlogin.png
+│   │   └── updateUserInfoConfirmation.png
+│   ├── requirements.txt
+│   ├── routers
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── chat.py
+│   │   └── chat_history.py
+│   ├── tests
+│   │   ├── __init__.py
+│   │   ├── sample.pdf
+│   │   ├── sample.txt
+│   │   ├── test_auth.py
+│   │   ├── tpdf.py
+│   │   └── ttxt.py
+│   └── utils
+│       ├── __init__.py
+│       ├── api.py
+│       ├── auth.py
+│       ├── database.py
+│       ├── deps.py
+│       ├── models.py
+│       ├── okapi_app.db
+│       ├── pdf.py
+│       └── summarizer.py
+├── docs.md
+├── frontend
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── app
+│   │   ├── admin
+│   │   │   ├── login
+│   │   │   │   └── page.js
+│   │   │   └── page.js
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   ├── login
+│   │   │   └── page.js
+│   │   ├── page.js
+│   │   ├── page.module.css
+│   │   └── register
+│   │       └── page.js
+│   ├── components
+│   │   ├── Footer.js
+│   │   ├── Header.js
+│   │   ├── ProtectedRoute.js
+│   │   └── Welcome.js
+│   ├── context
+│   │   └── AuthContext.js
+│   ├── jsconfig.json
+│   ├── next.config.mjs
+│   ├── package-lock.json
+│   ├── package.json
+│   └── tsconfig.json
+├── product
+│   └── Product design .jpg
+└── project-tree.txt
+
+16 directories, 54 files
 
 ```
     
@@ -154,10 +200,9 @@ The backend is built using:
 The frontend is built using:
 - HTML
 - CSS
+- JavaScript
 - Next.js 14
-- Tailwind CSS
-- TypeScript
-- Shadcn and zod for forms and their  validation
+- Bootsrtrap 5
 
 
 ## Authors
@@ -181,5 +226,3 @@ Contributions are welcome! For feature requests, bug reports, or questions, plea
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----

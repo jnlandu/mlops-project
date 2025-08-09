@@ -5,13 +5,19 @@ FROM python:3.10-slim
 WORKDIR /backend
 
 # Copy the requirements file to the working directory
-COPY . /backend/
-COPY ./requirements.txt /backend/requirements.txt
+
+COPY ./backend/requirements.txt /backend/requirements.txt
 
 RUN pip install --upgrade pip
 RUN pip install "fastapi[standard]"
 
 RUN pip install --no-cache-dir -r /backend/requirements.txt
+
+COPY ./backend/app /backend/app
+COPY ./backend/routers /backend/routers
+COPY ./backend/tests /backend/tests
+COPY ./backend/tests /backend/tests
+COPY ./backend/utils /backend/utils
 
 # Copy the application backend
 
