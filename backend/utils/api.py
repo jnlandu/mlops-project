@@ -1,6 +1,6 @@
 
 import os
-from groq import Groq
+from huggingface_hub import InferenceClient
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
@@ -8,11 +8,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-Client = Groq(api_key = GROQ_API_KEY)
+HUGGINGFACE_TOKEN = os.environ.get("HUGGINGFACE_TOKEN")
 
-# class ChatRequest(BaseModel):
-#     content: str
+client = InferenceClient(
+    token=HUGGINGFACE_TOKEN,
+)
 
-# class SummarizationRequest(BaseModel):
-#     content: str
+# For backward compatibility
+Client = client
+
+class ChatRequest(BaseModel):
+    content: str
+
