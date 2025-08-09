@@ -2,26 +2,34 @@
 FROM python:3.10-slim
 
 # Set the working directory inside the container
-WORKDIR /backend
+WORKDIR /app
 
-# Copy the requirements file to the working directory
+# Install system dependencies for OCR and image processing
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr \
+    libtesseract-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ./backend/requirements.txt /backend/requirements.txt
+# Copy the requirements file
+COPY requirements.txt .
 
+# Install Python dependencies
 RUN pip install --upgrade pip
-RUN pip install "fastapi[standard]"
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir -r /backend/requirements.txt
+# Copy the application source code
+COPY src/ ./src/
+COPY .env* ./
 
-COPY ./backend/app /backend/app
-COPY ./backend/routers /backend/routers
-COPY ./backend/tests /backend/tests
-COPY ./backend/tests /backend/tests
-COPY ./backend/utils /backend/utils
+# Create uploads directory
+RUN mkdir -p uploads
 
-# Copy the application backend
-
+# Expose port
 EXPOSE 8000
 
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/api/health || exit 1
+
 # Command to run the FastAPI app with uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

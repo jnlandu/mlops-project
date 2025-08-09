@@ -1,3 +1,10 @@
+# -------------------- main file --------------------
+# This file is the main entry point for the FastAPI application.
+# It sets up the FastAPI app, includes routers, and defines the root endpoint.
+# It also imports necessary modules and initializes the application.
+# ------------------------------------------------------
+
+
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import (

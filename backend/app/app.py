@@ -1,3 +1,9 @@
+# -------------------- app.py --------------------
+# This file contains the FastAPI application instance and its configuration.
+# It sets up the application, including middleware and CORS settings.
+# It also imports necessary modules and initializes the application.
+# ------------------------------------------------------
+
 import os 
 
 from fastapi import  FastAPI, Request
